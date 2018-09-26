@@ -1,0 +1,12 @@
+# the standard variables don't make sense for an uninstalled copy
+prefix=
+exec_prefix=
+libdir=@rtspserverlibdir@
+includedir=/home/ubuntu/Downloads/Gstreamer1.9/gst-rtsp-server-1.11.90
+
+Name: gst-rtsp-server
+Description: GStreamer based RTSP server
+Version: 1.11.90
+Requires: gstreamer-1.0 gstreamer-plugins-base-1.0
+Libs: -L${libdir} -lgstrtspserver-1.0
+Cflags: -I/home/ubuntu/Downloads/Gstreamer1.9/gst-rtsp-server-1.11.90 -I/home/ubuntu/Downloads/Gstreamer1.9/gst-rtsp-server-1.11.90 -I./..
