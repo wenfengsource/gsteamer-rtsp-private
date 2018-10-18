@@ -553,7 +553,7 @@ pad_added_cb (GstElement * uribin, GstPad * pad, GstElement * element)
 if(strstr(pp, "rtpmp4g"))
 {
 // wenfeng mpeg4 force using rtpmp4vpay
- payloader = gst_element_factory_make ("rtpmp4vpay", "rtpmp4vpay");
+ payloader = gst_element_factory_make ("rtpmp4vpay", NULL);
 }
 else
 {
@@ -577,7 +577,7 @@ else
   // wenfeng
   // add queue here is necessary
 #if 1
-  GstElement *queue = gst_element_factory_make ("queue", "queue");
+  GstElement *queue = gst_element_factory_make ("queue", NULL);
 
     gst_bin_add (GST_BIN_CAST (element), queue);
   gst_element_set_state (queue, GST_STATE_PLAYING);
@@ -667,7 +667,7 @@ no_more_pads_cb (GstElement * uribin, GstElement * element)
 GstElement *element22;
 element22= gst_bin_get_by_name (GST_BIN(uribin),"source");
   g_object_set (element22, "keep-alive-time",5,NULL); // for test
-
+ g_object_set (element22, "buffer-size",212992,NULL); // for test
  g_object_set (element22, "keep-alive-string","wenfeng",NULL);
 
   GST_DEBUG ("no-more-pads  udpsrc = %p", element22);
@@ -701,6 +701,7 @@ rtsp_media_factory_uri_create_element (GstRTSPMediaFactory * factory,
   g_assert (element != NULL);
 
   uribin = gst_element_factory_make ("uridecodebin", "uribin");
+  g_object_set (uribin, "buffer-size",212992,NULL); // for test
   if (uribin == NULL)
     goto no_uridecodebin;
 

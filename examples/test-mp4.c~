@@ -160,13 +160,13 @@ str =  g_strdup ("(udpsrc uri=\"0.0.0.0:60002 \" ! rtpmp2tpay)");
   factory = gst_rtsp_media_factory_new ();
 gst_rtsp_media_factory_set_shared(factory,1);
 
-  // gst_rtsp_media_factory_set_launch (factory, "( udpsrc port=60000 caps=\"video/mpegts\" keep-alive-time=5 ! rtpmp2tpay name=pay0 pt=33 )");
+ //  gst_rtsp_media_factory_set_launch (factory, "( udpsrc port=60000 caps=\"video/mpegts\" keep-alive-time=5 ! queue ! rtpmp2tpay name=pay0 pt=33 )");
 
- gst_rtsp_media_factory_set_launch (factory, "( udpsrc uri=udp://0.0.0.0:60000 buffer-size=212992 caps=\"video/mpegts\" ! tsparse ! tsdemux ! queue ! mpeg4videoparse config-interval=1 ! rtpmp4gpay name=pay0 pt=96 )");  //wenfeng if queue is necessary
+ // gst_rtsp_media_factory_set_launch (factory, "( udpsrc uri=udp://0.0.0.0:60000 buffer-size=212992 caps=\"video/mpegts\" ! tsparse ! tsdemux ! queue ! mpeg4videoparse config-interval=1 ! rtpmp4gpay name=pay0 pt=96 )");  //wenfeng if queue is necessary
 
- //gst_rtsp_media_factory_set_launch (factory, "( udpsrc uri=udp://0.0.0.0:60000 buffer-size=212992 caps=\"video/mpegts\" ! tsparse ! tsdemux ! queue ! h264parse config-interval=1 ! rtph264pay name=pay0 pt=96 )");  //wenfeng if queue is necessary
+   gst_rtsp_media_factory_set_launch (factory, "( udpsrc uri=udp://0.0.0.0:60000 caps=\"video/mpegts\" ! tsparse ! tsdemux ! h264parse config-interval=1 ! rtph264pay name=pay0 pt=96 )");  //wenfeng if queue is necessary
 
- gst_rtsp_media_factory_set_launch (factory, "( tcpclientsrc host=0.0.0.0 port=60000 caps=\"video/mpegts\" ! tsparse ! tsdemux ! queue ! h264parse config-interval=1 ! rtph264pay name=pay0 pt=96 )");
+// gst_rtsp_media_factory_set_launch (factory, "( tcpclientsrc host=0.0.0.0 port=60000 caps=\"video/mpegts\" ! tsparse ! tsdemux ! queue ! h264parse config-interval=1 ! rtph264pay name=pay0 pt=96 )");
 
 //  g_signal_connect (factory, "media-configure", (GCallback) media_configure_cb,
   //    factory);
