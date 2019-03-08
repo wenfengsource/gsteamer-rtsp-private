@@ -1121,6 +1121,7 @@ create_and_configure_udpsinks (GstRTSPStream * stream, GstElement * udpsink[2])
   g_object_set (G_OBJECT (udpsink0), "buffer-size", priv->buffer_size, NULL);
 
   g_object_set (G_OBJECT (udpsink1), "sync", FALSE, NULL);
+  g_object_set (G_OBJECT (udpsink0), "sync", FALSE, NULL);  // wenfeng
   /* Needs to be async for RECORD streams, otherwise we will never go to
    * PLAYING because the sinks will wait for data while the udpsrc can't
    * provide data with timestamps in PAUSED. */
@@ -2454,8 +2455,9 @@ create_sender_part (GstRTSPStream * stream, GstBin * bin, GstState state)
       gst_pad_link (priv->send_src[i], pad);
       gst_object_unref (pad);
 
-      if (priv->udpsink[i])
+      if (priv->udpsink[i]){
         plug_sink (bin, priv->tee[i], priv->udpsink[i], &priv->udpqueue[i]);
+      }
 
       if (priv->mcast_udpsink[i])
         plug_sink (bin, priv->tee[i], priv->mcast_udpsink[i],
@@ -2475,7 +2477,7 @@ create_sender_part (GstRTSPStream * stream, GstBin * bin, GstState state)
       /* when its only TCP, we need to set sync and preroll to FALSE
        * for the sink to avoid deadlock. And this is only needed for
        * sink used for RTCP data, not the RTP data. */
-      if (i == 1)
+     // if (i == 1)  // wenfeng disable 
         g_object_set (priv->appsink[i], "async", FALSE, "sync", FALSE, NULL);
     }
 
